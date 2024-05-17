@@ -1,0 +1,339 @@
+% !TeX spellcheck = russian-aot
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[oglav,spisok,boldsect,eqwhole,figwhole,hyperref,hyperprint,remarks,greekit]{fn2kursstyle}
+
+
+\usepackage{subfig}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{changepage}
+\usepackage{multirow}
+\usepackage{supertabular}
+\usepackage{multicol}
+\usepackage{scalerel}
+\usepackage{graphicx}
+
+\usepackage{colortbl}
+\usepackage{nicematrix}
+\usepackage{stackengine}
+
+\frenchspacing
+\sloppy
+\counterwithout{equation}{section}
+\counterwithout{figure}{section}
+\newenvironment{comment}{}{}
+
+\graphicspath{
+	{./style/},
+	{./illustr/}
+}
+
+% Переопределение команды \vec, чтобы векторы печатались полужирным курсивом
+\renewcommand{\vec}[1]{\text{\mathversion{bold}${#1}$}}%{\bi{#1}}
+
+\renewcommand{\phi}{\varphi}
+\newcommand\TTa{\scalerel*{\tTa}{T}}
+
+\newcommand\thh[1]{\text{\mathversion{bold}${#1}$}}
+\newcommand\xrowht[2][0]{\addstackgap[.5\dimexpr#2\relax]{\vphantom{#1}}}
+%Переопределение команды нумерации перечней: точки заменяются на скобки
+%\renewcommand{\labelenumi}{\theenumi)}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+
+
+\subject{}
+\worktype{Домашнее задание}
+\title{Математика --- Домашнее задание 1}
+\variant{А.\,Д.~Егоров}	
+\group{}
+\author{А.\,Д.~Егоров}
+\date{2023}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	\pagebreak
+	
+	\section{Задача №1}
+	
+		\subsection*{Условие}
+		
+			Зная, что $|\vec{a}| = 2, |\vec{b}| = 5, \angle{ \left( \vec{a}, \vec{b}\right) } = \dfrac{2\pi}{3}$. При каком коэффициенте $\alpha$ векторы $\vec{p} = \alpha \vec{a} + 17 \vec{b}$ и $\vec{q} = 3 \vec{a} - \vec{b}$ перпендикулярны.
+		
+		\subsection*{Решение}
+			Векторы должны быть перпендикулярны, т.~е.
+			$
+			\angle(\vec{p}, \vec{q}) = \dfrac{\pi}{2}
+			$
+			или 		
+			$
+				\cos \angle(\vec{p}, \vec{q}) = 0.
+			$
+			Воспользуемся следующей формулой:
+			\begin{equation*}
+				\label{cos}
+				\cos \angle(\vec{p}, \vec{q}) = 
+				\dfrac{\left( \vec{p}, \vec{q} \right)}{|\vec{p}| \, |\vec{q}|},
+				\quad
+				\Rightarrow \quad ( \vec{p}, \vec{q} ) = 0.
+			\end{equation*}
+			Вычислим скалярное произведение $\vec{p}$ и $\vec{q}$:
+			\begin{gather*}
+				( \vec{p}, \vec{q} ) = 
+				(\alpha \vec{a} + 17 \vec{b}, 3 \vec{a} - \vec{b}) = 
+				(\alpha \vec{a}, 3 \vec{a}) + (17 \vec{b}, 3 \vec{a}) - (\alpha \vec{a}, \vec{b}) - (17 \vec{b},  \vec{b}) = \\
+				= 3 \alpha |\vec{a}|^2 + (51 - \alpha) 
+				|\vec a| |\vec b| \cos \angle(\vec{a}, \vec{b}) - 17 |\vec b|^2 = 0.
+			\end{gather*}
+			Выразим $\alpha$:
+			\begin{gather*}
+				\alpha (3 |\vec a|^2 - |\vec a| |\vec b| \cos \angle(\vec{a}, \vec{b}) ) =
+				17 |\vec b|^2 - 51 |\vec a| |\vec b| \cos \angle(\vec{a}, \vec{b}),
+				\\
+				\alpha =
+				\dfrac{17 |\vec b|^2 - 51 |\vec a| |\vec b| \cos \angle(\vec{a}, \vec{b})}{(3 |\vec a|^2 - |\vec a| |\vec b| \cos \angle(\vec{a}, \vec{b}) )}.
+			\end{gather*}
+			Подставляя числа из условия в полученную формулу для $\alpha$, получим
+			$$
+			\text{Ответ:} \quad \alpha = 40.
+			$$
+		
+	\newpage
+	\section{Задача №2}
+	
+		\subsection*{Условие}
+			Множество 
+			$
+			\mathbf{G} = 
+			\{ x: x = (x_1, x_2, \dots, x_n)^T \in \mathbb{R}^n,\ |\ x_i \geqslant 0, i=\overline{1,n} \}$. Проверить является ли $\mathbf{G}$ линейным пространством (ЛП), если операции сложения и умножения определены следующим образом: 
+			\begin{equation}
+				\label{sum_mul}
+				x + y = 
+				\left(
+				\begin{matrix}
+					x_1 \cdot y_1 \\
+					x_2 \cdot y_2 \\
+					\dots \\
+					x_n \cdot y_n
+				\end{matrix}
+				\right), 
+				\qquad
+				\alpha x = 
+				\left(
+				\begin{matrix}
+					x_1^\alpha \\
+					x_2^\alpha \\
+					\dots \\
+					x_n^\alpha
+				\end{matrix}
+				\right).
+			\end{equation}
+			
+		
+		\subsection*{Решение}
+			Возьмем элементы $x, y, z \in \mathbf G$. 			
+			Операция суммирования \eqref{sum_mul} оставляет элемент в пространстве $\mathbf G$ 
+			(произведение положительных величин --- положительная величина), 
+			так и умножение \eqref{sum_mul} оставляет элемент в пространстве $\mathbf G$ 
+			(возведение положительного числа в степень --- положительное число). Проверим аксиомы ЛП:
+			\begin{enumerate}
+				\item Коммутативность операции сложения для $\mathbf G$ очевидна.
+				\item Ассоциативность операции сложения для $\mathbf G$ очевидна.
+				\item Нулевой элемент ($\vec{x} + \vec{a} = \vec{x}$) --- вектор из единиц.
+				\item Для любого элемента найдется противоположный ($\vec{x} + \vec{\overline{x}} = \vec{0}$) --- вектор из нулей.
+				\item 
+				Проверим останется ли элемент $u$, определенный как $u =  \beta (\alpha x + y)$, т.~е. являющийся линейной комбинацией элементов из $ \mathbf G$, в пространстве $\mathbf G$:
+				$$
+				u = \beta (\alpha x + y) =
+				\begin{pmatrix}
+					(x_1^{\alpha} \cdot y_1) ^{\beta} \\
+					(x_2^{\alpha} \cdot y_2)^{\beta} \\
+					\dots \\
+					(x_n^{\alpha} \cdot y_n)^{\beta}
+				\end{pmatrix}
+				= 
+				\begin{pmatrix}
+					x_1^{\alpha \beta} \cdot y_1^{\beta} \\
+					x_2^{\alpha \beta} \cdot y_2^{\beta} \\
+					\dots \\
+					x_n^{\alpha \beta} \cdot y_n^{\beta}
+				\end{pmatrix}
+				= \beta \alpha x + \beta y.
+				$$
+				Обозначим $u_i = (x_i^\alpha \cdot y_i )^\beta, \ i=\overline{1,n}$, рассмотрим данные элементы: 
+				$$
+				x_i^{\alpha \beta} \geqslant 0, y_i^\beta \geqslant 0 \quad \Rightarrow \quad u_i \geqslant 0,
+				$$
+				получается, что
+				$$
+				u = (u_1, u_2, \dots, u_n)^T \in \mathbb{R}^n, \ u_i \geqslant 0, \ i=\overline{1,n} 
+				\quad \Rightarrow \quad
+				u \in \mathbf{G}.
+				$$
+				Линейная комбинация элементов из $\mathbf G$ не выводит элемент из простанства $\mathbf G$.
+			\end{enumerate}
+			 Аксиомы линейного пространства выполнены, следовательно, $\mathbf G$ --- линейное пространство.
+			
+		\newpage
+		
+		\section{Задача №3}
+		
+			\subsection*{Условие}
+				Доказать, что для любых векторов
+				$\vec x,\ \vec y,\ \vec z$ 
+				и любых чисел $\alpha,\ \beta,\ \gamma$ вектора \phantom{adsga}
+				$\alpha \vec x - \beta \vec y, \ \gamma \vec y - \alpha \vec z, \ \beta \vec z - \gamma \vec x$ линейно зависимы.
+			\subsection*{Решение}
+				\looser{-0.03}{Составим систему из данных векторов и попытаемся свести ее к единичной матрице:}
+				\begin{gather*}
+					\left(
+					\begin{NiceMatrix}
+						\alpha & -\beta & 0 \\
+						0 & \gamma & -\alpha \\
+						-\gamma & 0 & \beta
+					\end{NiceMatrix}
+					\right) \rightarrow 
+					\left(
+					\begin{NiceMatrix}
+						1 & -\beta / \alpha & 0 \\
+						0 & 1 & -\alpha / \gamma \\
+						1 & 0 & - \beta / \gamma
+					\end{NiceMatrix}
+					\right)  \rightarrow 	
+					\left(
+					\begin{NiceMatrix}
+						1 & -\beta / \alpha & 0 \\
+						0 & 1 & -\alpha / \gamma \\
+						0 & \beta / \alpha & - \beta / \gamma
+					\end{NiceMatrix}
+					\right)  \rightarrow \\
+					\rightarrow 	
+					\left(
+					\begin{NiceMatrix}
+						1 & -\beta / \alpha & 0 \\
+						0 & 1 & -\alpha / \gamma \\
+						0 & 1 & - \alpha / \gamma
+					\end{NiceMatrix}
+					\right)  \rightarrow 	
+					\left(
+					\begin{NiceMatrix}
+						1 & -\beta / \alpha & 0 \\
+						0 & 1 & -\alpha / \gamma \\
+						0 & 0 & 0
+					\end{NiceMatrix}
+					\right).
+				\end{gather*}
+				Последняя строчка обнулилась, следовательно, для любых векторов
+				$\vec x,\ \vec y,\ \vec z$ 
+				и любых чисел $\alpha,\ \beta,\ \gamma$ векторы
+				$\alpha \vec x - \beta \vec y, \ \gamma \vec y - \alpha \vec z, \ \beta \vec z - \gamma \vec x$ линейно зависимы.
+	
+	\newpage
+	\section{Задача №4}
+		\subsection*{Условие}
+			Проверить является ли система векторов $\vec e_i, \ i = 1, 2, 3$ базисом в линейном пространстве $\mathbb{R}^3$, и найти координаты вектора $\vec x$ в этом базисе. По известному координатному вектору $\vec y_e$ найти вектор $\vec y$.
+			\begin{gather*}
+				\vec e_1 = (-2, 3, 0)^T, \ 
+				\vec e_2 = (2, -3, 4)^T, \
+				\vec e_3 = (-2, 0, -3)^T, \\
+				\vec x = (-4, 3, 7)^T, \
+				\vec y_e = (4, 4, 3)^T.
+			\end{gather*}
+		\subsection*{Решение}
+		Составим матрицу перехода к базису $\vec e_i, \ i = 1, 2, 3$ и линейными преобразованиями попытаемся свести ее к единичной:	
+		\begin{gather*}
+			A = 
+			\left(
+			\begin{NiceMatrix}
+				-2 & 2 & -2 \\
+				3 & -3 & 0 \\
+				0 & 4 & -3
+			\end{NiceMatrix}
+			\right) \rightarrow
+			\left(
+			\begin{NiceMatrix}
+				1 & -1 & 1 \\
+				1 & -1 & 0 \\
+				0 & 1 & -3/4
+			\end{NiceMatrix}
+			\right) \rightarrow
+			\left(
+			\begin{NiceMatrix}
+				1 & -1 & 1 \\
+				0 & 1 & -3/4 \\
+				0 & 0 & 1
+			\end{NiceMatrix}
+			\right) \rightarrow
+			\left(
+			\begin{NiceMatrix}
+				1 & 0 &0 \\
+				0 & 1 & 0 \\
+				0 & 0 & 1
+			\end{NiceMatrix}
+			\right).
+		\end{gather*}
+		Следовательно, векторы $\vec e_i, \ i = 1, 2, 3$ действительно образуют базис в $\mathbb{R}^3$.
+		Теперь разложим вектор $\vec x$ по базису  $\vec e_i$:
+		$$
+			\vec x_e = A^{-1} \cdot \vec x = \left(\frac{7}{2}, \ \frac{5}{2}, \  1\right)^T.
+		$$
+		Найдем вектор $\vec y$:
+		$$
+		\vec y = A \cdot \vec y_e = \left(-6, \ 0, \  7 \right)^T.
+		$$
+		
+		\newpage
+		\section{Задача №5}
+		\subsection*{Условие}
+		Найти какой-нибудь базис и размерность линейного пространства $\mathbf V$, заданного следующим образом ($\mathbf P_n$ --- пространство многочленов степени 4):
+		$$
+		V = \{ p(x) \in \mathbf P_4 \  | \ p(1) + p(-1) = 0 \}
+		$$
+		\subsection*{Решение}
+		Любой многочлен $p(x) \in \mathbf P_4$ определен как
+		$$
+			p(x) = \alpha + \beta x + \gamma x^2 + \zeta x^3 + \theta x^4,
+		$$
+		где $\alpha,\ \beta,\ \gamma,\ \zeta,\ \theta$ --- независимые коэффициенты при соответствующих степенях многочлена. 
+		Базис в $\mathbf P_4$ задается множеством $\{1,\ x,\ x^2,\ x^3,\ x^4\}$.
+		Следовательно, размерность пространства $\mathbf P_4$ равна 5.	
+			 
+		Для пространства $\mathbf V$ необходимо, чтобы многочлен удовлетворял равенству:  $\ p(1) + p(-1) = 0$. Подставим $p(x)$ в уравнение и упростим: 
+		\begin{gather*}
+			\alpha + \beta + \gamma + \zeta + \theta + 
+			\alpha - \beta + \gamma - \zeta + \theta = 0, \\
+			2 \alpha + 2 \gamma + 2 \theta = 0, \\
+			\alpha + \gamma + \theta = 0.
+		\end{gather*}
+		Получается. что один из коэффициентов $\alpha,\ \gamma,\ \theta$ определяется через 2 других. Пусть $\theta$ будет зависимым коэффициентом, т.~е.
+		$$
+		\theta = \theta (\alpha, \gamma) = - (\alpha + \gamma).
+		$$
+		\looser{-0.03}{Тогда многочлены $q(x)$, принадлежащие пространству $\mathbf V$, выглядят следующим образом:}
+		\begin{equation*}
+			q(x) = \alpha + \beta x + \gamma x^2 + \zeta x^3 - (\alpha + \gamma) x^4.
+		\end{equation*}
+		Перегруппируем относительно коэффициентов и окончательно получим
+		\begin{equation}
+			\label{basis_4_V}
+			q(x) = \alpha (1 - x^4) + \beta x + \gamma (x^2 - x^4) + \zeta x^3.
+		\end{equation}
+		Из \eqref{basis_4_V} \looser{0.02}{следует, что базис $\mathbf V$ можно задать множеством 
+		$\{1 - x^4,\ x,\ x^2 - x^4,\ x^3\}$}
+		и размерность данного пространства равна 4.
+		
+		
+			
+	
+
+	
+\end{document}

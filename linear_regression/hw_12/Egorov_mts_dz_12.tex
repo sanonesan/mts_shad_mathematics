@@ -1,0 +1,302 @@
+% !TeX spellcheck = russian-aot
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[oglav,spisok,boldsect,eqwhole,figwhole,hyperref,hyperprint,remarks,greekit]{fn2kursstyle}
+
+
+\usepackage{subfig}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{changepage}
+\usepackage{multirow}
+\usepackage{supertabular}
+\usepackage{multicol}
+\usepackage{scalerel}
+\usepackage{graphicx}
+
+\usepackage{colortbl}
+\usepackage{nicematrix}
+\usepackage{stackengine}
+
+\frenchspacing
+\sloppy
+\counterwithout{equation}{section}
+\counterwithout{figure}{section}
+\newenvironment{comment}{}{}
+
+\graphicspath{
+	{./style/},
+	{./illustr/}
+}
+
+% Переопределение команды \vec, чтобы векторы печатались полужирным курсивом
+\renewcommand{\vec}[1]{\text{\mathversion{bold}${#1}$}}%{\bi{#1}}
+
+\renewcommand{\phi}{\varphi}
+\newcommand{\eps}{\varepsilon}
+\newcommand\TTa{\scalerel*{\tTa}{T}}
+
+\newcommand\thh[1]{\text{\mathversion{bold}${#1}$}}
+\newcommand\xrowht[2][0]{\addstackgap[.5\dimexpr#2\relax]{\vphantom{#1}}}
+%Переопределение команды нумерации перечней: точки заменяются на скобки
+%\renewcommand{\labelenumi}{\theenumi)}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+
+
+\subject{}
+\worktype{Домашнее задание}
+\title{Математика --- Домашнее задание 12}
+\variant{А.\,Д.~Егоров}	
+%\group{}
+%\author{А.\,Д.~Егоров}
+\date{2024}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	\pagebreak
+	
+	
+	\section{Задача №\,1}
+	
+		\subsection*{Условие}	
+		
+		
+			По определению 
+			\begin{gather*}
+				R^2 = \dfrac{ESS}{TSS}, \quad TSS = ESS + RSS, \\
+				TSS = \displaystyle\sum_{i=1}^{n}(y_i - \overline{y})^2, \quad
+				ESS = \displaystyle\sum_{i=1}^{n}(\widehat{y}_i - \overline{y})^2, \quad
+				RSS = \displaystyle\sum_{i=1}^{n}(y_i - \widehat{y}_i)^2,
+			\end{gather*}
+			а также $corr(y, \widehat{y}) = \dfrac{cov(y, \widehat{y})}{\sigma_{y} \sigma_{\widehat{y}}}$. 
+			Доказать, что $R^2 = corr^2 (y, \widehat{y})$.
+		
+		\subsection*{Решение}
+		
+			Известно, что 
+			$
+			\vec{y} = \widehat{\vec{y}} + \widehat{\vec{\eps}},
+			$
+			выборочный смешанный момент второго порядка $S^2_{y\widehat{y}}$ такой, что
+			$$
+				S^2_{y\widehat{y}} = \dfrac{1}{n} \sum_{i=1}^{n} (y_i - \overline{y})(\widehat{y}_i - \overline{y}), 
+				\quad
+				\sigma_y = S_{yy}.
+			$$
+			С учетом этих формул:
+			\begin{multline*}
+				corr(y, \widehat{y}) = 
+				\dfrac{cov(y, \widehat{y})}{\sigma_{y} \sigma_{\widehat{y}}} = 
+				\dfrac{cov(\widehat{y} + \widehat{\eps} , \widehat{y})}{S_{yy} S_{\widehat{y}\widehat{y}}}
+				= \\ =
+				\dfrac{
+					cov(\widehat{y}, \widehat{y}) + cov(\widehat{\eps}, \widehat{y})
+				}{
+					S_{yy}S_{\widehat{y}\widehat{y}}
+				} =
+				\dfrac{
+					cov(\widehat{y}, \widehat{y})
+				}{
+					S_{yy}S_{\widehat{y}\widehat{y}}
+				} = 
+				\dfrac{
+					S^2_{\widehat{y}\widehat{y}}
+				}{
+					S_{yy} S_{\widehat{y}\widehat{y}}
+				} = 
+				\dfrac{
+					S_{\widehat{y}\widehat{y}}
+				}{
+					S_{yy}
+				}.
+			\end{multline*}
+			Тогда 
+			$$
+				R^2 = \dfrac{ESS}{TSS} = \dfrac{n S^2_{\widehat{y}\widehat{y}}}{n S^2_{yy}} =  \dfrac{S^2_{\widehat{y}\widehat{y}}}{S^2_{yy}} = corr^2(y, \widehat{y}),
+			$$
+			что и требовалось доказать.
+		
+	
+	\newpage
+	\section{Задача №\,2}
+	
+		\subsection*{Условие}	
+		
+			\looser{-0.01}{Оценки коэффициентов в матричной форме можно вычислить по следующей формуле:}	
+			$$
+				\widehat{\vec \beta} = \left( \vec X^T \vec X \right)^{-1} \vec X^T \vec y.
+			$$
+			Оценки МНК несмещенные: $E \left[ \widehat{\beta}_j | x \right] = \beta_j$.
+			
+			Требуется: 
+			\begin{enumerate}
+				\item Выразить оценки коэффициентов $\widehat{\vec \beta}$ через $\vec \beta$ в матричной форме.
+				\item Доказать свойство несмещенности коэффициентов $\widehat{ \vec \beta}$ в матричной форме.
+			\end{enumerate}	
+			
+			
+			
+		
+		\subsection*{Решение}
+		
+		Известно, что 
+		$
+		\vec{y} = \vec X \vec \beta + {\vec{\eps}},
+		$ тогда подставим данное выражение в формулу для $\widehat{\vec \beta}$ и проведем преобразования: 
+		\begin{multline*}
+			\widehat{\vec \beta} = 
+			\left( \vec X^T \vec X \right)^{-1} \vec X^T \vec y = 
+			\left( \vec X^T \vec X \right)^{-1} \vec X^T \left(\vec X \vec \beta + {\vec{\eps}}\right)
+			= \\ =
+			\left( \vec X^T \vec X \right)^{-1}\left( \vec X^T \vec X \right) \vec \beta 
+			+ \left( \vec X^T \vec X \right)^{-1} \vec X^T {\vec{\eps}} 
+			= \\ = 
+			\vec I \vec \beta 
+			+ \left( \vec X^T \vec X \right)^{-1} \vec X^T {\vec{\eps}} = 
+			\vec \beta 
+			+ \left( \vec X^T \vec X \right)^{-1} \vec X^T {\vec{\eps}},
+		\end{multline*}
+		где $\vec I$ --- единичная матрица. Окончательно получим
+		$$
+			\widehat{\vec \beta} = \vec \beta 
+			+ \left( \vec X^T \vec X \right)^{-1} \vec X^T {\vec{\eps}}.
+		$$
+		Математическое ожидание данной величины будет следующим: 
+		$$
+			E \widehat{\vec \beta} = E \vec \beta 
+			+ E \left[\left( \vec X^T \vec X \right)^{-1} \vec X^T {\vec{\eps}}\right] = \vec \beta + \vec 0 = \vec \beta.
+		$$
+		Следовательно, $\widehat{ \vec \beta}$ --- оценка несмещенная.
+		
+%		Выражение 
+%		$
+%		\vec{y} = \widehat{\vec{y}} + {\vec{\eps}}
+%		$, где $\widehat{\vec{y}} = \vec X \vec \beta$, можно записать в индексной форме: 
+%		$$
+%			y_i = \widehat{{y}}_i + {{\eps}}_i, \quad \widehat{{y}}_i = \sum_{j = 0}^{n} x_{ij} \beta_j, 
+%		$$
+%		где $x_{ij}$ --- элемент $i$-ой строки, $j$-ого столбца матрицы $\vec X$.
+		
+	
+	
+	\newpage
+	\section{Задача №\,3}
+	
+		\subsection*{Условие}	
+		
+			Доказать, что 
+			$$
+				\displaystyle\sum_{i=1}^{n} \left(y_i - \overline{y}\right)^2 = RSS + ESS + 2 \sum_{i=1}^{n} \widehat{\eps}_i (\widehat{y}_i - \overline{y})
+			$$
+		
+		\subsection*{Решение}
+		
+			Известно, что $y_i = \widehat{y}_i + \widehat{\eps}_i$. Подставим данное выражение в левую часть равенства, раскроем скобки и перегруппируем слагаемые:			
+			\begin{multline*}
+				\sum_{i=1}^{n} \left(y_i - \overline{y}\right)^2 = 
+				\sum_{i=1}^{n} \left(\widehat{y}_i  + \widehat{\eps}_i - \overline{y}\right)^2 = 
+				\sum_{i=1}^{n} 
+				\left[
+				\widehat{y}_i^2  - 2 \widehat{y}_i  \overline{y} + \overline{y}^2
+				+  \widehat{\eps}_i^2 + 
+				2 \widehat{y}_i  \widehat{\eps}_i - 2 \widehat{\eps}_i  \overline{y}
+				\right]
+				= \\ =
+				\sum_{i=1}^{n} 
+				\left[
+				(\widehat{y}_i - \overline{y})^2
+				+  \widehat{\eps}_i^2 +
+				2 \widehat{\eps}_i (\widehat{y}_i  - \overline{y})
+				\right] 
+				= 
+				\sum_{i=1}^{n} (\widehat{y}_i - \overline{y})^2 + 
+				\sum_{i=1}^{n} \widehat{\eps}_i^2 +
+				2 \sum_{i=1}^{n} \widehat{\eps}_i (\widehat{y}_i  - \overline{y}).
+			\end{multline*}
+			
+%			\noindent
+%			Подставим $\widehat{\eps}_i = y_i - \widehat{y}_i$ в слагаемое $\widetilde{\eps}_i^2$:
+%			\begin{gather*}
+%				\sum_{i=1}^{n} (\widehat{y}_i - \overline{y})^2 + 
+%				\sum_{i=1}^{n} \widehat{\eps}_i^2 +
+%				2 \sum_{i=1}^{n} \widehat{\eps}_i (\widehat{y}_i  - \overline{y}) = 
+%				\sum_{i=1}^{n} (\widehat{y}_i - \overline{y})^2 + 
+%				\sum_{i=1}^{n} (y_i - \widehat{y}_i)^2 +
+%				2 \sum_{i=1}^{n} \widehat{\eps}_i (\widehat{y}_i  - \overline{y}).
+%			\end{gather*}
+			
+			\noindent
+			С учетом того, что 			
+			$
+				ESS = \displaystyle\sum_{i=1}^{n}(\widehat{y}_i - \overline{y})^2, \ 
+				RSS = \displaystyle\sum_{i=1}^{n}(y_i - \widehat{y}_i)^2 = \displaystyle\sum_{i=1}^{n} \widehat{\eps}_i^2,
+			$
+			получим
+			$$
+			\sum_{i=1}^{n} \left(y_i - \overline{y}\right)^2 = RSS + ESS + 2 \sum_{i=1}^{n} \widehat{\eps}_i (\widehat{y}_i - \overline{y}),
+			$$
+			что и требовалось доказать.
+			
+			
+		
+		
+		
+	\newpage
+	\section{Задача №\,4}
+		
+		\subsection*{Условие}
+			
+			Используя предпосылку Гаусса-Маркова №\,5 (гомоскедастичность стандартного отклонения ошибки) в матричной форме: 
+			$$
+				Var(\vec \eps | \vec X) = \sigma^2 \vec I,
+			$$
+			где $\vec I$ --- единичная матрица.	
+			Доказать, что
+			$$
+				Var(\widehat{\vec \beta} | \vec X) = \sigma^2 (\vec X^T \vec X)^{-1}.
+			$$
+		
+		\subsection*{Решение}
+			
+			Воспользуемся равенством 
+			$
+				\widehat{\vec \beta} = \vec \beta 
+				+ \left( \vec X^T \vec X \right)^{-1} \vec X^T {\vec{\eps}},
+			$
+			полученным в задаче №\,2: пусть $\vec A = \left( \vec X^T \vec X \right)^{-1} \vec X^T$, тогда 
+			\begin{multline*}
+				Var\left[\widehat{\vec \beta} | \vec X\right] =	
+				Var\left[ \left( \vec \beta 
+				+ \vec A {\vec{\eps}}  \right) | \vec X \right] =	
+				Var\bigl[ \vec \beta | \vec X \bigr] + 
+				Var\left[\vec A {\vec{\eps}} | \vec X \right] =	
+				Var\left[\vec A {\vec{\eps}} | \vec X \right]
+				= \\ = 
+				Var\left[ {\vec{\eps}} | \vec X \right] \vec A \vec A^T = 
+				\sigma^2 \vec A \vec A^T = 
+				\sigma^2 \left( \vec X^T \vec X \right)^{-1} \vec X^T \left[ \left( \vec X^T \vec X  \right)^{-1} \vec X^T \right]^T 
+				= \\ = 
+				\sigma^2 \left( \vec X^T \vec X \right)^{-1} \vec X^T \vec X \left( \vec X^T \vec X  \right)^{-1} =
+				\sigma^2 \vec I \left( \vec X^T \vec X \right)^{-1} = \sigma^2 \left( \vec X^T \vec X \right)^{-1}.
+			\end{multline*}
+			
+			Окончательно получим
+			$$
+			Var(\widehat{\vec \beta} | \vec X) = \sigma^2 (\vec X^T \vec X)^{-1},
+			$$
+			что и требовалось доказать.
+				
+		
+			
+			
+	
+\end{document}

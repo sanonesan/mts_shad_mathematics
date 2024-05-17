@@ -1,0 +1,200 @@
+% !TeX spellcheck = russian-aot
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[oglav,spisok,boldsect,eqwhole,figwhole,hyperref,hyperprint,remarks,greekit]{fn2kursstyle}
+
+
+\usepackage{subfig}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{changepage}
+\usepackage{multirow}
+\usepackage{supertabular}
+\usepackage{multicol}
+\usepackage{scalerel}
+\usepackage{graphicx}
+
+\usepackage{colortbl}
+\usepackage{nicematrix}
+\usepackage{stackengine}
+
+\frenchspacing
+\sloppy
+\counterwithout{equation}{section}
+\counterwithout{figure}{section}
+\newenvironment{comment}{}{}
+
+\graphicspath{
+	{./style/},
+	{./illustr/}
+}
+
+% Переопределение команды \vec, чтобы векторы печатались полужирным курсивом
+\renewcommand{\vec}[1]{\text{\mathversion{bold}${#1}$}}%{\bi{#1}}
+
+\renewcommand{\phi}{\varphi}
+\newcommand\TTa{\scalerel*{\tTa}{T}}
+
+\newcommand\thh[1]{\text{\mathversion{bold}${#1}$}}
+\newcommand\xrowht[2][0]{\addstackgap[.5\dimexpr#2\relax]{\vphantom{#1}}}
+%Переопределение команды нумерации перечней: точки заменяются на скобки
+%\renewcommand{\labelenumi}{\theenumi)}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+
+
+\subject{}
+\worktype{Домашнее задание}
+\title{Математика --- Домашнее задание 3}
+\variant{А.\,Д.~Егоров}	
+\group{}
+\author{А.\,Д.~Егоров}
+\date{2023}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	\pagebreak
+	
+	\section{Задача №1}
+	
+		\subsection*{Условие}		
+			Компания по страхованию автомобилей разделяет водителей по 3 классам: класс А (мало
+			рискует), класс В (рискует средне), класс С (рискует сильно). Компания предполагает, что
+			из всех водителей, застрахованных у неё, 30\% принадлежат классу А, 50\% – классу В, 20\% –
+			классу С. Вероятность того, что в течение года водитель класса А попадёт хотя бы в одну
+			автокатастрофу, равна 0,01; для водителя класса В эта вероятность равна 0,03, а для
+			водителя класса С – 0,1. Мистер Джонс страхует свою машину у этой компании и в течение
+			года попадает в автокатастрофу. Какова вероятность того, что он относится к классу А?
+		
+			
+		\subsection*{Решение}
+		
+			\looser{0.02}{Пусть $
+			H = \{\text{человек страхует машину и в течении года попадет в ДТП}\}
+			$, а }
+			$
+				H_i = \{\text{человек из } i\text{-ого класса страхует машину и в течении года попадет в ДТП}\}.
+			$ 
+			Получаем, что 
+			$
+				P(H) = P(H_A) + P(H_B)  + P(H_C) = 0.3 \cdot 0.01 + 0.5 \cdot 0.03 + 0.2 \cdot 0.1 = 0.038.
+			$
+			Тогда вероятность, что человек принадлежит классу А, при условии, что он попал в аварию, следующая:
+			$$
+				\dfrac{P(H_A)}{P(H)} = \dfrac{0.003}{0.038} \approx 0.0789.
+			$$
+			
+	\newpage
+	\section{Задача №2}
+	
+		\subsection*{Условие}		
+			Движением частицы по целым точкам прямой управляет схема Бернулли с вероятностью
+			$р$ исхода $1$. Если в данном испытании схемы Бернулли появилась $1$, то частица из своего
+			положения переходит в правую соседнюю точку, а в противном случае - в левую.
+			Найти	
+			вероятность того, что за $n$ шагов частица из точки $0$ перейдет в точку $m$.
+		
+		\subsection*{Решение}
+			Положим, что для того, чтобы дойти до точки $m$ потребовалось сделать 
+			$k$ шагов вправо и, соответственно, $n - k$ шагов влево. Также допустим, что точка $m$ находится справа от точки $0$, т.~е. $k \geqslant n - k$, тогда $m = k - (n - k)$ или $k = \dfrac{n + m}{2}$. Тогда для того, чтобы найти вероятность попадания из точки 0 в точку $m$ за $n$ шагов, воспользуемся формулой вероятности для биномиального закона $Bi(n,p)$:
+			$$
+				P(\text{\{из т. 0 в т. $m$ за $n$ шагов\}}) = C_n^{k}\, p^k (1- p)^{n-k} = 
+				%C_{n}^{\frac{n+m}{2}} p^{\frac{n+m}{2}} (1- p)^{n-\frac{n+m}{2}} = 
+				C_{n}^{\frac{n+m}{2}}\, p^{\frac{n+m}{2}} (1- p)^{\frac{n-m}{2}}.
+			$$
+			Аналогично для случая, когда точка $m$ слева от $0$:
+			$$
+			P(\text{\{из т. 0 в т. $m$ за $n$ шагов\}}) = 
+			C_{n}^{\frac{n-m}{2}}\, p^{\frac{n-m}{2}} (1- p)^{\frac{n+m}{2}}.
+			$$
+			
+	\newpage
+	\section{Задача №3}
+	
+		\subsection*{Условие}
+			Плотность распределения $p(x)$ некоторой случайной величины имеет вид
+			$$ p(x) = \dfrac{C}{\mathrm{e}^x + \mathrm{e}^{-x}}$$
+			где $\mathrm{C}$ – константа. Найти значение этой константы c и вероятность того, что случайная
+			величина примет значение, принадлежащее интервалу $\left(-\pi, \pi\right)$.		
+			
+		\subsection*{Решение}
+			Для нахождения константы воспользуемся условием нормировки: 
+			\begin{gather*}
+				\int_{-\infty}^{\infty} p(x) \mathrm{d} x = 
+				\int_{-\infty}^{\infty} \dfrac{C}{\mathrm{e}^x + \mathrm{e}^{-x}} \mathrm{d} x = 1,
+			\end{gather*}
+			отсюда получим, что $C = \dfrac{2}{\pi}$. Тогда вероятность того, что случайная величина примет значение, принадлежащее интервалу $\left(-\pi, \pi\right)$, будет следующая:
+			\begin{gather*}
+				\int_{-\pi}^{\pi} \dfrac{2 / \pi}{\mathrm{e}^x + \mathrm{e}^{-x}} \mathrm{d} x = \dfrac{2}{\pi} 
+				\left( 
+				\arctg{\left(\mathrm{e}^{\pi}\right)}
+				-\arctg{\left(\mathrm{e}^{-\pi}\right)} 
+				\right)
+				\approx 0.945013.
+			\end{gather*}
+			
+			
+			
+		
+	\newpage
+	\section{Задача №4}
+	
+		\subsection*{Условие}
+		Задана плотность распределения вероятностей $f(x)$ непрерывной случайной величины $X$:
+		$$
+			f(x) = 
+			\begin{cases}
+				A \sqrt{x}, & x \in [1, 4], \\
+				0, & x \not \in [1, 4].
+			\end{cases}
+		$$		
+		Найти функцию распределения $F(x)$ и $P(2 < X < 3)$.		
+		
+		\subsection*{Решение}
+		
+		Из условия нормировки найдем константу A: 
+		\begin{gather*}
+			\int_{-\infty}^{\infty} f(x) \mathrm{d} x = 
+			\int_{1}^{4} A \sqrt{x} \, \mathrm{d} x = 1,
+		\end{gather*}
+		отсюда $A = \dfrac{3}{14}$. Тогда функция распределения с.~в. $X$ имеет вид
+		\begin{gather*}
+			F(x) = \int_{-\infty}^{x} f(y) \, \mathrm{d} y = 
+			\int_{1}^{x} \dfrac{3}{14} \sqrt{y} \, \mathrm{d} y = 
+			\dfrac{1}{7} \left(x^{3/2} - 1\right),
+		\end{gather*}
+		а вероятность $P(2 < X < 3) = F(3) - F(2) = \dfrac{1}{7} \left(3^{3/2} - 2^{3/2}\right)$.
+		
+		
+	
+	\newpage
+	\section{Задача №5}
+	
+		\subsection*{Условие}	
+		При работе ЭВМ время от времени возникают сбои. Поток сбоев можно считать
+		простейшим.		
+		Среднее число сбоев за сутки равно $1.5$.
+		Найти вероятность того, что в течение суток произойдет хотя бы один сбой.	
+				
+		\subsection*{Решение}
+		
+		Число сбоев $\lambda = 1.5$, поток простейший (пуассоновский случайный процесс), тогда вероятность события $A = $ \{в течении суток произойдет хотя бы 1 сбой\}, будет следующая: 
+		\begin{gather*}
+			P(A) = P(X \geqslant 1) = 1 - P(X = 0) = 1 - \mathrm{e}^{-\lambda}
+			= 1 - \mathrm{e}^{-1.5} \approx 0.77687,
+		\end{gather*}
+		где $X$ --- случайная величина, отвечающая за число сбоев.
+
+		
+		
+		
+	
+\end{document}

@@ -1,0 +1,346 @@
+% !TeX spellcheck = russian-aot
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[oglav,spisok,boldsect,eqwhole,figwhole,hyperref,hyperprint,remarks,greekit]{fn2kursstyle}
+
+
+\usepackage{subfig}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{changepage}
+\usepackage{multirow}
+\usepackage{supertabular}
+\usepackage{multicol}
+\usepackage{scalerel}
+\usepackage{graphicx}
+
+\usepackage{colortbl}
+\usepackage{nicematrix}
+\usepackage{stackengine}
+
+\frenchspacing
+\sloppy
+\counterwithout{equation}{section}
+\counterwithout{figure}{section}
+\newenvironment{comment}{}{}
+
+\graphicspath{
+	{./style/},
+	{./illustr/}
+}
+
+% Переопределение команды \vec, чтобы векторы печатались полужирным курсивом
+\renewcommand{\vec}[1]{\text{\mathversion{bold}${#1}$}}%{\bi{#1}}
+
+\renewcommand{\phi}{\varphi}
+\newcommand\TTa{\scalerel*{\tTa}{T}}
+
+\newcommand\thh[1]{\text{\mathversion{bold}${#1}$}}
+\newcommand\xrowht[2][0]{\addstackgap[.5\dimexpr#2\relax]{\vphantom{#1}}}
+%Переопределение команды нумерации перечней: точки заменяются на скобки
+%\renewcommand{\labelenumi}{\theenumi)}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+
+
+\subject{}
+\worktype{Домашнее задание}
+\title{Математика --- Домашнее задание 4}
+\variant{А.\,Д.~Егоров}	
+\group{}
+\author{А.\,Д.~Егоров}
+\date{2023}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	\pagebreak
+	
+	\section{Задача №1}
+	
+		\subsection*{Условие}		
+			Правильная монетка подбрасывается до тех пор пока не выпадет $n$ орлов подряд. Найти математическое ожидание необходимого числа бросков.
+		\subsection*{Решение}
+		
+			Пусть $\xi_k$ --- число бросков необходимых для $k$ орлов подряд, $p$ --- вероятность выпадения орла, тогда запишем следующую формулу:
+			\begin{equation}
+				\label{Exi_k}
+				E\xi_k = p (E\xi_{k-1} + 1) + \left(1 - p\right) 
+				\left( E\xi_{k-1} + 1 + E\xi_k\right).
+			\end{equation}
+			\looser{-0.02}{Рассмотрим данную формулу: для того, чтобы получить $k$ орлов, необходимо до этого выбить $k - 1$ орла и сделать еще один бросок. Отсюда в формуле появляется составляющая $E\xi_{k-1} + 1$. Логично, что при броске, следующим за $k - 1$, может выпасть решка, тогда придется начинать процесс выбивания орла заново (отсюда прибавка $E\xi_k$ в третьей скобке). Вероятность успешного исхода равна $p$ (вероятности выпадения орла), вероятность провала равна $1 - p$, соответственно.} 
+			Выразим $E\xi_k$ через $E\xi_{k-1}$:
+			$$
+				E\xi_k = \dfrac{1}{p}(E\xi_{k-1} + 1).
+			$$
+			Получилась рекурсивная формула. Подставим в нее значения $k = \overline{1, n}$:
+			\begin{gather*}
+				E\xi_1 = \dfrac{1}{p}(E\xi_{0} + 1) = \dfrac{1}{p},
+			\end{gather*}
+			т.~к. мат. ожидание количества бросков для получения 0 орлов подряд равно 0,
+			\begin{gather*}
+				E\xi_2 = \dfrac{1}{p}(E\xi_{1} + 1) = \dfrac{1}{p^2} + \dfrac{1}{p}, \\
+				E\xi_3 = \dfrac{1}{p}(E\xi_{2} + 1) = \dfrac{1}{p^3} + \dfrac{1}{p^2} + \dfrac{1}{p}, \\
+				\cdots, \\
+				E\xi_n = \dfrac{1}{p}(E\xi_{n-1} + 1) = \dfrac{1}{p^n} + \dfrac{1}{p^{n-1}} + \cdots + \dfrac{1}{p^2} + \dfrac{1}{p}. \\
+			\end{gather*}
+			Видно, что получается сумма геометрической прогрессии, и, так как монетка правильная, т.~е. $p = \dfrac{1}{2}$, получим 
+			$$
+				E\xi_n = \sum_{k=1}^{n} \dfrac{1}{p^k} = \dfrac{\frac{1}{p} (\frac{1}{p^n} -1)}{\frac{1}{p} - 1} = 2 (2^n - 1).
+			$$
+			 
+		
+	\newpage
+	\section{Задача №2}
+	
+		\subsection*{Условие}	
+			Авария происходит в точке $\mathrm{X}$, которая равномерно распределена на дороге длиной $\mathrm{L}$. Во время аварии машина скорой помощи находится в точке $\mathrm{Y}$, которая так же равномерно распределена на дороге. Считая, что $\mathrm{X}$ и $\mathrm{Y}$ независимы, найти математическое ожидание расстояния между машиной скорой помощи и точкой аварии.
+		\subsection*{Решение}
+			$X$, $Y$ --- случайные величины, отвечающие за распределения точек $\mathrm{X}$, $\mathrm{Y}$.
+			Из условия:
+			$X \sim \mathrm{R} \left[0, L\right]$, $Y  \sim \mathrm{R} \left[0, L\right]$, т.~е. функции плотности распределения $X, Y$ следующие: $f_{X} = f_{Y} = \dfrac{1}{L}$. Так как сказано, что $X$ и $Y$ являются независимыми случайными величинами, то верна следующая формула для функции плотности совместного распределения $X$, $Y$:
+			$$
+				f_{XY} = f_X f_Y = \dfrac{1}{L^2}
+			$$
+			Нас интересует расстояние между точками $|X - Y|$, а точнее его математическое ожидание $E|X - Y|$, найдем его:
+			$$
+				E|X - Y| = \int_{0}^{L} \int_{0}^{L} |x - y| \dfrac{1}{L^2} \ \mathrm{d} y \ \mathrm{d} x.
+			$$
+			Вычислим интегралы:
+			\begin{gather*}
+					\int_{0}^{L} |x - y| \ \mathrm{d} y = 
+					\int_{0}^{x} (x - y) \ \mathrm{d} y +
+					\int_{x}^{L} (y - x) \ \mathrm{d} y = 	
+					\dfrac{1}{L^2} - L x + x^2, \\
+					\int_{0}^{L} \left( \dfrac{1}{L^2} - L x + x^2 \right) \ \mathrm{d} x = \dfrac{L^3}{3}.
+			\end{gather*}
+			Подставим и получим 
+			$$
+				E|X - Y| = \dfrac{1}{L^2} \dfrac{L^3}{3} = \dfrac{L}{3}.
+			$$
+			
+	\newpage
+	\section{Задача №3}
+	
+		\subsection*{Условие}
+			 \vspace*{-1mm}
+			 \begin{table}[!h]
+				 	\centering
+				 	\caption{\label{table_XY} Совместный закон распределения случайных величин $X$ и $Y$}
+				 	\vspace*{2mm}
+				 	%\hspace*{-8mm}
+				 	\begin{NiceTabular}{|c|c|c|c|}[colortbl-like]
+					 		
+					 		\hline
+					 		$X \backslash Y$
+					 		& 0
+					 		& 1
+					 		& 3 \\
+					 			
+					 		\hline
+					 		0
+					 		& 0.15
+					 		& 0.05
+					 		& 0.3\\
+					 		
+					 		\hline
+					 		-1
+					 		& 0
+					 		& 0.15
+					 		& 0.1\\
+					 		
+					 		\hline
+					 		-2
+					 		& 0.15
+					 		& 0
+					 		& 0.1\\
+					
+					 		\hline
+					 	\end{NiceTabular}
+				 	\label{table: XY}				
+				 \end{table}		
+			 \vspace*{2mm}
+			Найти: 
+			\begin{itemize}
+				\item законы распределения случайных величин $\mathrm{X}$, $\mathrm{Y}$,
+				\item EX, EY, DX, DY, cov(X, Y), corr(X, Y) а также EV, DV, где $\mathrm{V} = 6\mathrm{X} - 4 \mathrm{Y} + 3$.
+			\end{itemize}
+		\subsection*{Решение}
+		
+			Для нахождения частного закона распределения случайной величины $X$ просуммируем значения в строках, а для $Y$ суммируем значения в столбцах.
+			\vspace*{-1mm}
+			\begin{table}[!h]
+				\centering
+				\caption{\label{table_X} Закон распределения случайной величины $X$}
+				\vspace*{2mm}
+				%\hspace*{-8mm}
+				\begin{NiceTabular}{|c|c|c|c|}[colortbl-like]
+					
+					\hline
+					$X$
+					& 0
+					& -1
+					& -2 \\
+					
+					\hline
+					$P(X)$
+					& 0.5
+					& 0.25
+					& 0.25\\
+					
+					\hline
+				\end{NiceTabular}
+				\label{table: X}				
+			\end{table}		
+			\vspace*{2mm}
+			
+			\vspace*{-1mm}
+			\begin{table}[!h]
+				\centering
+				\caption{\label{table_Y} Закон распределения случайной величины $Y$}
+				\vspace*{2mm}
+				%\hspace*{-8mm}
+				\begin{NiceTabular}{|c|c|c|c|}[colortbl-like]
+					
+					\hline
+					$Y$
+					& 0
+					& 1
+					& 3 \\
+					
+					\hline
+					$P(Y)$
+					& 0.3
+					& 0.2
+					& 0.5\\
+					
+					\hline
+				\end{NiceTabular}
+				\label{table: Y}				
+			\end{table}		
+			\vspace*{2mm}
+			
+			\looser{-0.03}{Для нахождения мат. ожидания и дисперсии воспользуемся следующими формулами:}
+			$$
+				E\xi = \sum_{i=0}^{n} p(\xi_i) \xi_i, 
+				\quad 
+				D\xi = E\xi^2 - (E\xi)^2 = \sum_{i=0}^{n} p(\xi_i) \xi_i^2 - \left( \sum_{i=0}^{n} p(\xi_i) \xi_i \right)^2,
+			$$
+			где $\xi$ --- случайная величина, $\xi_i$ --- значение этой случайной величины. Для случайных величин $X$ и $Y$ получим
+			\begin{gather*}
+				EX = -1 \cdot 0.25 - 2 \cdot 0.25 = - 0.75,
+				\quad DX = 1 \cdot 0.25 + 4 \cdot 0.25 - (0.75)^2 = 0.6875, \\
+				EY = 1.7, \quad DY = 1.81.
+			\end{gather*}
+			Найдем ковариацию и коэффициент корреляции: 
+			\begin{gather*}
+				cov(X, Y) = E(XY)- (EX) (EY),
+				\quad
+				corr(X, Y) = \dfrac{cov(X, Y)}{\sqrt{DX} \sqrt{DY}}, \\
+				EXY = \sum_{i=0}^{n} \sum_{j=0}^{m} p_{ij} X_i Y_j  = 
+				1 \cdot (-1) \cdot 0.15 + 3 \cdot (-1) \cdot 0.1 + 3 \cdot (-2) \cdot 0.1 = -1.05, \\
+				cov(X, Y) = -1.05 - (-0.75) \cdot 1.7 = 0.225, \\
+				corr(X, Y) = \dfrac{0.225}{\sqrt{0.6875} \sqrt{1.81}} =  0.2017.
+			\end{gather*}
+			Теперь найдем математическое ожидание и дисперсию случайной величины $V$: 
+			\begin{gather*}
+				EV = E(6X - 4Y + 3) = 6EX -4EY + 3 = -8.3,\\
+				DV = D(6X - 4Y + 3) = D(6X - 4Y) = D(6X) + D(4Y) - 2 cov(6X, 4Y) = \\
+				= 36 D(X) + 16 D(Y) - 48 cov(X, Y) = 
+				36 \cdot 0.6875 + 16 \cdot 1.81 - 48 \cdot 0.225 = 42.91.
+			\end{gather*}
+			
+				
+			
+	\newpage
+	\section{Задача №4}
+	
+		\subsection*{Условие}
+			Пусть $x_1, x_2, \dots, x_n$ --- результаты $n$ независимых повторных наблюдений над дискретной случайной величиной $\xi$, принимающей значения из множества $\mathrm{Y} = \{ 0, 1\}$ с вероятностями: 
+			$$
+				P\left(\xi = 0\right) = \dfrac{1 - \theta}{2}, 
+				\quad
+				P\left(\xi = 1\right) = \dfrac{1 + \theta}{2}, 
+				\quad
+				-1 < \theta < 1.
+			$$
+			Найти оценку максимального правдоподобия (МП) для $\theta$.
+			
+		\subsection*{Решение}
+			Имеем закон распределения $Bern(\frac{1 - \theta}{2})$,			
+			c учетом, что было проведено $n$ испытаний, функция максимального правдоподобия будет следующая: 
+			$$
+				L(\underline{x}, \theta) = \left(\dfrac{1 - \theta}{2}\right)^{\sum_{j = 1}^{n} x_j} 
+				\left(\dfrac{1 - \theta}{2}\right)^{n - \sum_{j = 1}^{n} x_j}
+				%\prod_{j = 1}^{n}  C_n^{x_j} \left(\dfrac{1 - \theta}{2}\right)^{x_j} \left(\dfrac{1 + \theta}{2}\right)^{n - x_j},
+			$$
+			прологарифмируем и получим
+			$$
+				\ln L(\underline{x}, \theta) = \sum_{j = 1}^{n} x_j \ln{\left(\dfrac{1 - \theta}{2}\right)} + 
+				(n - \sum_{j = 1}^{n} x_j) \ln{\left(\dfrac{1 - \theta}{2}\right)}.
+			$$
+			Продифференцируем по $\theta$ и приравняем к нулю:
+			\begin{gather*}
+				\dfrac{ \partial \ln L(\underline{x}, \theta) }{ \partial \theta} 
+				= 
+				- \dfrac{1}{2} \sum_{j = 1}^{n} x_j \left( \dfrac{2}{1 - \theta} \right) +
+				\dfrac{1}{2} (n - \sum_{j = 1}^{n} x_j) \left( \dfrac{2}{1 + \theta} \right)	= 0, 
+				%n \overline{x} (1 + \theta) + n (1 - \theta) - n \overline{x} (1 - \theta) = 0, \\
+			\end{gather*}
+			отсюда получим, что $\theta_{ML} = 1 - 2 \overline{x}$.
+			
+	\newpage
+	\section{Задача №5}
+	
+		\subsection*{Условие}	
+			Пусть $x_1, x_2, \dots, x_n$ --- результаты $n$ независимых повторных наблюдений над случайной величиной $\xi$, плотность распределения которой имеет вид
+			\begin{gather*}
+				f(x,\,\theta) = 
+				p f_1(x,\,\theta) + (1 - p) f_2(x,\,\theta), \\
+				f_1(x,\,\theta) = 
+				\begin{cases}
+					\dfrac{1}{\theta}, &0 < x \leqslant \theta, \\
+					0, &else,
+				\end{cases} 
+				\quad 
+				f_2(x,\,\theta) = 
+				\begin{cases}
+					\dfrac{1}{1 - \theta}, &\theta < x \leqslant 1, \\
+					0, &else,
+				\end{cases}
+			\end{gather*}
+			Найти оценки неизвестных параметров $p$, $\theta$ методом моментов.
+		\subsection*{Решение}
+			Найдем истинные моменты первого и второго порядка: 
+			\begin{gather*}
+				X^1 = \int_{0}^{1} f(x, \theta) \ \mathrm{d} x = 
+				p \int_{0}^{\theta} f_1(x, \theta) \ \mathrm{d} x + 
+				(1 - p) \int_{\theta}^{1} f_2(x, \theta) \ \mathrm{d} x = 
+				\dfrac{1}{2} (1 - p + \theta),\\
+				X^2 = \int_{0}^{1} x^2 f(x, \theta) \ \mathrm{d} x = 
+				\dfrac{1}{3} (1 + \theta + \theta^2 - p ( 1 + \theta)),
+			\end{gather*}
+			приравняем их к соответствующим им выборочным моментам: 
+			\begin{gather*}
+				\begin{cases}
+					\dfrac{1}{2} (1 - p + \theta) = \overline{X},\\
+					\dfrac{1}{3} (1 + \theta + \theta^2 - p ( 1 + \theta)) = \overline{X^2},\phantom{\vline height 2em}
+				\end{cases}
+			\end{gather*}
+			--- система из 2-х уравнений и 2-х неизвестных, решив ее, получим ответ: 
+			$$
+				p = \dfrac{1-2\overline{X} + 4 \overline{X}^2 - 3 \overline{X^2}}{1 - 2 \overline{X}}, 
+				\quad
+				\theta = \dfrac{2 \overline{X} - 3 \overline{X^2}}{1 - 2 \overline{X}}.
+			$$
+			
+			
+	
+\end{document}

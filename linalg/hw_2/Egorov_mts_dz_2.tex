@@ -1,0 +1,579 @@
+% !TeX spellcheck = russian-aot
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+\usepackage[oglav,spisok,boldsect,eqwhole,figwhole,hyperref,hyperprint,remarks,greekit]{fn2kursstyle}
+
+
+\usepackage{subfig}
+\usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{changepage}
+\usepackage{multirow}
+\usepackage{supertabular}
+\usepackage{multicol}
+\usepackage{scalerel}
+\usepackage{graphicx}
+
+\usepackage{colortbl}
+\usepackage{nicematrix}
+\usepackage{stackengine}
+
+\frenchspacing
+\sloppy
+\counterwithout{equation}{section}
+\counterwithout{figure}{section}
+\newenvironment{comment}{}{}
+
+\graphicspath{
+	{./style/},
+	{./illustr/}
+}
+
+% Переопределение команды \vec, чтобы векторы печатались полужирным курсивом
+\renewcommand{\vec}[1]{\text{\mathversion{bold}${#1}$}}%{\bi{#1}}
+
+\renewcommand{\phi}{\varphi}
+\newcommand\TTa{\scalerel*{\tTa}{T}}
+
+\newcommand\thh[1]{\text{\mathversion{bold}${#1}$}}
+\newcommand\xrowht[2][0]{\addstackgap[.5\dimexpr#2\relax]{\vphantom{#1}}}
+%Переопределение команды нумерации перечней: точки заменяются на скобки
+%\renewcommand{\labelenumi}{\theenumi)}
+\renewcommand{\labelenumii}{\arabic{enumi}.\arabic{enumii}}
+\renewcommand{\labelenumiii}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}}
+\renewcommand{\labelenumiv}{\arabic{enumi}.\arabic{enumii}.\arabic{enumiii}.\arabic{enumiv}}
+
+
+
+\subject{}
+\worktype{Домашнее задание}
+\title{Математика --- Домашнее задание 2}
+\variant{А.\,Д.~Егоров}	
+\group{}
+\author{А.\,Д.~Егоров}
+\date{2023}
+
+\begin{document}
+	
+	\maketitle
+	\tableofcontents
+	\pagebreak
+	
+	\section{Задача №1}
+	
+		\subsection*{Условие}		
+			Найти обратную матрицы методом присоединённой матрицы (методом алгебраических дополнений):
+			\begin{equation}
+				\label{mat_1}
+				\vec A = 
+				\begin{pNiceMatrix}
+					5 & 3 & 1 \\
+					1 & -3 & -2 \\
+					-5 & 2 & 1					
+				\end{pNiceMatrix}
+			\end{equation}
+			
+			
+		\subsection*{Решение}
+			Для нахождения обратной матрицы к матрице $\vec A$ методом алгебраических дополнений воспользуемся следующей формулой:
+			\begin{equation}
+				\label{alg_dop_eq}
+				\vec A^{-1} = \dfrac{1}{\det{\vec A}} \vec {A^*}^T,
+			\end{equation}
+			где $\vec A^*$ --- матрица алгебраических дополнений матрицы $\vec A$.
+			Найдем определитель матрицы \eqref{mat_1}: 
+			\begin{equation}
+				\label{det_mat_1}
+				\det \vec A = 
+				\begin{vNiceMatrix}
+					5 & 3 & 1 \\
+					1 & -3 & -2 \\
+					-5 & 2 & 1					
+				\end{vNiceMatrix} = 19.
+			\end{equation}
+			Найдем алгебраические дополнения $A^*_{ij}$ (элементы в матрице $\vec A^*$): 
+			\begin{equation}
+				A^*_{ij} = (-1)^{i + j} \cdot \det {\vec {\widehat A}}, \quad i,j = \overline{1,n},
+			\end{equation}
+			где n --- размер матрицы $\vec A$, $\vec {\widehat A}$ --- матрица, полученная из матрицы $\vec A$ исключением $i$-ой строки и $j$-ого столбца. Считая, по формуле получим:
+			\begin{equation*} 
+				\begin{NiceMatrix}
+					A^*_{11} =\phantom{-}1, & A^*_{12} = 9, & A^*_{13} = -13, \\
+					A^*_{21} = -1, & A^*_{22} = 10, & A^*_{23} = -25, \\
+					A^*_{31} = -3, & A^*_{32} = 11, & A^*_{33} = -18, \\
+				\end{NiceMatrix}
+			\end{equation*}
+			следовательно,
+			\begin{equation}
+				\label{alg_dop_mat}
+				\vec A^* = 
+				\begin{pNiceMatrix}
+					\phantom{-}1 & 9 & -13 \\
+					-1 & 10 & -25 \\
+					-3 & 11 & -18 \\
+				\end{pNiceMatrix}.
+			\end{equation}
+			Подставим \eqref{det_mat_1}, \eqref{alg_dop_mat} в \eqref{alg_dop_eq} и получим ответ: 
+			\begin{equation*}
+				\vec A^{-1} = \dfrac{1}{19}	
+				\begin{pNiceMatrix}
+					\phantom{-}1 & -1 & -3 \\
+					9 & 10 & 11 \\
+					-13 & -25 & -18 \\
+				\end{pNiceMatrix}.
+			\end{equation*}
+			
+			
+		
+	\newpage
+	\section{Задача №2}
+	
+		\subsection*{Условие}
+		Решить матричное уравнение:
+		\begin{equation}
+			\label{task_2}
+			\vec A \vec X \vec B = \vec B,
+		\end{equation}		
+		\begin{equation*}
+			\vec A = 
+			\begin{pNiceMatrix}
+				1 & -2 & 3 \\
+				2 & 3 & -1 \\
+				0 & -2 & -1 \\
+			\end{pNiceMatrix},
+			\quad
+			\vec B = 
+			\begin{pNiceMatrix}
+				1 & 2 & 3 \\
+				4 & 5 & 6 \\
+				7 & 8 & 0 \\
+			\end{pNiceMatrix}.			
+		\end{equation*}
+				
+		\subsection*{Решение}
+		Из \eqref{task_2} видно, что для того, чтобы выполнялось равенство, должно быть верно следующее:
+		\begin{equation*}
+			\vec A \vec X \vec B = \vec E \vec B = \vec B,
+		\end{equation*}
+		где $\vec E$ --- единичная матрица. Следовательно, $\vec A \vec X = \vec E$, т.~е.
+		\begin{gather*}
+			\vec X = \vec A^{-1}. 						
+		\end{gather*}
+		Находим обратную матрицу к $\vec A$ и получаем ответ:
+		\begin{equation*}
+			\vec X = 
+			- \dfrac{1}{21}
+			\begin{pNiceMatrix}
+				-5 & -8 & -7 \\
+				2 & -1 & 7 \\
+				-4 & 2 & 7 \\
+			\end{pNiceMatrix}.
+		\end{equation*}
+			
+		\newpage
+		
+		\section{Задача №3}
+		
+			\subsection*{Условие}
+			Найти ранг матрицы $\vec A$ при различных значениях параметра $\lambda$.
+			\begin{equation*}
+				\vec A = 
+				\begin{pNiceMatrix}
+					3 & 1 & 1 & 4 \\
+					\lambda & 4 & 10 & 1 \\
+					1 & 7 & 17 & 3 \\
+					2 & 2 & 4 & 3 \\
+				\end{pNiceMatrix}.
+			\end{equation*}
+			\subsection*{Решение}
+			Линейными преобразованиями сведем матрицу $\vec A$ к верхнетреугольной матрице с единицами на диагонали (для строки с параметром  $\lambda$ нельзя выполнять элементарные преобразования, которые могут сократить параметр или возвести его в степень):
+			\begin{gather*}
+				\begin{pNiceMatrix}
+					3 & 1 & 1 & 4 \\
+					\lambda & 4 & 10 & 1 \\
+					1 & 7 & 17 & 3 \\
+					2 & 2 & 4 & 3 \\
+				\end{pNiceMatrix} 
+				\rightarrow
+				\begin{pNiceMatrix}
+					1 & 1 & 2 & 1.5 \\
+					0 & -2 & -5 & -0.5 \\
+					0 & 6 & 15 & 1.5 \\					
+					0 & 4 - \lambda & 10 - 2 \lambda & 1 - 1.5 \lambda \\		
+				\end{pNiceMatrix}	
+				\rightarrow	\\
+				\rightarrow	
+				\begin{pNiceMatrix}
+					1 & 1 & 2 & 1.5 \\
+					0 & 1 & 2.5 & 0.25 \\
+					0 & 0 & 0 & 0 \\					
+					0 & 0 & 10 - 2.5 (4 - \lambda) - 2 \lambda & 1 - 0.25 (4 - \lambda)- 1.5 \lambda \\		
+				\end{pNiceMatrix}
+				\rightarrow
+				\begin{pNiceMatrix}
+					1 & 1 & 2 & 1.5 \\
+					0 & 1 & 2.5 & 0.25 \\
+					0 & 0 & \dfrac{\lambda}{2} & -\dfrac{5 \lambda}{4} \\
+					0 & 0 & 0 & 0 \\		
+				\end{pNiceMatrix}.
+			\end{gather*}
+			Следовательно, если $\lambda = 0$, то $\mathrm{rank} (\vec A) = 2$, в противном случае
+			$\mathrm{rank} (\vec A)= 3$.
+				
+	
+	\newpage
+	\section{Задача №4}
+		\subsection*{Условие}
+		Исследовать систему и найти решение в зависимости от значения параметра:
+		\begin{equation*}
+			\begin{cases}
+				x_1 + 4 x_2 + 2 x_3 = -1, \\
+				2 x_1 + 3 x_2 -1 x_3 = 3, \\
+				x_1 - x_2 -3  x_3 = 4, \\
+				x_1 - 6 x_2 - \lambda x_3 = 9, \\				
+			\end{cases}
+		\end{equation*}
+		
+		\subsection*{Решение}
+		Перепишем в матричном виде $\vec A \vec x = \vec b$:
+		\begin{equation*}
+			\vec A = 
+			\begin{pNiceMatrix}
+				1 & 4 & 2  \\
+				2 & 3 & -1  \\
+				1 & -1 & -3 \\
+				1 & -6 & - \lambda \\		
+			\end{pNiceMatrix}, 
+			\quad
+			\vec x = 
+			\begin{pNiceMatrix}
+				x_1 \\
+				x_2 \\
+				x_3 \\
+			\end{pNiceMatrix},
+			\quad 
+			\vec b = 
+			\begin{pNiceMatrix}
+				-1 \\
+				3 \\
+				4 \\
+				9\\
+			\end{pNiceMatrix}.		
+		\end{equation*}
+		Составим совместную матрицу $(\vec A | \vec b)$:
+		\begin{equation*}
+			\begin{pNiceArray}{ccc|c}
+				1 & 4 & 2 & -1 \\
+				2 & 3 & -1 & 3 \\
+				1 & -1 & -3 & 4\\
+				1 & -6 & - \lambda & 9 \\
+			\end{pNiceArray}
+			\rightarrow
+			\begin{pNiceArray}{ccc|c}
+				1 & -1 & -3 & 4\\
+				0 & 5 & 5 & -5 \\
+				0 & 5 & 5 & -5 \\
+				0 & -5 & 3 - \lambda & 5 \\
+			\end{pNiceArray}
+			\rightarrow
+			\begin{pNiceArray}{ccc|c}
+				1 & -1 & -3 & 4\\
+				0 & 1 & 1 & -1 \\
+				0 & 0 & 8 - \lambda & 0 \\
+				0 & 0 & 0 & 0 \\
+			\end{pNiceArray}
+		\end{equation*}
+		Если $\lambda \ne 8$, то решение следующее: 
+		\vspace*{-5mm}
+		$$x_1 = 3,\ x_2 = -1,\ x_3 = 0 
+		\quad \text{или} \quad
+		\vec x = 
+		\begin{pNiceMatrix}
+			3 \\
+			-1 \\
+			0 \\
+		\end{pNiceMatrix}.
+		$$
+		Рассмотрим случай, когда $\lambda = 8$. Продолжим преобразовывать систему: 
+		\begin{equation*}
+			\begin{pNiceArray}{ccc|c}
+				1 & -1 & -3 & 4\\
+				0 & 1 & 1 & -1 \\
+				0 & 0 & 0 & 0 \\
+				0 & 0 & 0 & 0 \\
+			\end{pNiceArray}
+			\rightarrow
+			\begin{pNiceArray}{ccc|c}
+				1 & 0 & -2 & 3\\
+				0 & 1 & 1 & -1 \\
+				0 & 0 & 0 & 0 \\
+				0 & 0 & 0 & 0 \\
+			\end{pNiceArray},
+		\end{equation*}
+		тогда решение имеет вид
+		\begin{equation*}
+			\begin{cases}
+				x_1 = 3 + 2 x_3,\\
+				x_2 = -1 - x_3, \\
+				x_3 = x_3.
+			\end{cases}
+		\end{equation*}
+	
+		
+	\newpage
+	\section{Задача №5}
+		\subsection*{Условие}
+		Найти собственные значения и вектора для данной матрицы:
+		\begin{equation*}
+			\vec A =
+			\begin{pNiceArray}{ccc}
+				1 & -3 & 4\\
+				4 & -7 & 8 \\
+				6 & -7 & 7 \\
+			\end{pNiceArray},
+		\end{equation*}
+		
+		\subsection*{Решение}	
+		Найдем корни характеристического уравнения
+		$
+			\left| \vec A - \lambda \vec E \right| = 0,
+		$
+		где $\vec E$ --- единичная матрица, $\lambda$ --- параметр, относительно которого решается уравнение:
+		\begin{equation*}
+			\left| \vec A - \lambda \vec E \right| = 
+			\begin{vNiceMatrix}
+				1 - \lambda & -3 & 4 \\
+				4 & -7 - \lambda & 8 \\
+				6 & -7 & 7 - \lambda \\
+			\end{vNiceMatrix} = 3 + 5 \lambda + \lambda^2 - \lambda^3 = 0,
+		\end{equation*}
+		получим, что собственные значения для $\vec A$ следующие:
+		\vspace*{-2.5mm}
+		$$
+		\lambda_{1,2} = -1, \quad \lambda_3 = 3.
+		$$
+		Найдем собственные векторы $\vec v_i, \ i = \overline{1, 3}$: 
+		\begin{enumerate}
+			\item $\lambda_{1,2} = -1$:
+			\begin{gather*}
+				\vec A - (-1) \vec E =
+				\begin{pNiceMatrix}
+					2 & -3 & 4\\
+					4 & -6 & 8 \\
+					6 & -7 & 8 \\
+				\end{pNiceMatrix}
+				\rightarrow
+				\begin{pNiceMatrix}
+					1 & -1.5 & 2\\
+					0 & 1 & -2 \\
+					0 & 0 & 0 \\
+				\end{pNiceMatrix}
+				\rightarrow
+				\begin{pNiceMatrix}
+					1 & 0 & -1 \\
+					0 & 1 & -2 \\
+					0 & 0 & 0 \\
+				\end{pNiceMatrix}.
+			\end{gather*}	
+			Получаем, что
+			$
+			\vec v_{1,2} = 
+			\begin{pNiceMatrix}
+				x_3 \\
+				2\, x_3\\
+				x_3
+			\end{pNiceMatrix},
+			$	
+			пусть $x_3 = 1$, тогда
+			$
+			\vec v_{1,2} = 
+			\begin{pNiceMatrix}
+				1 \\
+				2 \\
+				1
+			\end{pNiceMatrix}.
+			$	
+			
+			\item $\lambda_{3} = 3$:
+			\begin{gather*}
+				\vec A - (3) \vec E =
+				\begin{pNiceMatrix}
+					-2 & -3 & 4\\
+					4 & -10 & 8 \\
+					6 & -7 & 4\\
+				\end{pNiceMatrix}
+				\rightarrow
+				\begin{pNiceMatrix}
+					1 & 1.5 & -2\\
+					0 & -16 & 16 \\
+					0 & -16 & 16 \\
+				\end{pNiceMatrix}
+				\rightarrow
+				\begin{pNiceMatrix}
+					1 & 0 & -0.5 \\
+					0 & 1 & -1 \\
+					0 & 0 & 0 \\
+				\end{pNiceMatrix}.
+			\end{gather*}	
+			Получаем, что
+			$
+			\vec v_{3} = 
+			\begin{pNiceMatrix}
+				0.5 \, x_3 \\
+				x_3\\
+				x_3
+			\end{pNiceMatrix},
+			$	
+			пусть $x_3 = 2$, тогда
+			$
+			\vec v_{3} = 
+			\begin{pNiceMatrix}
+				1 \\
+				2 \\
+				2
+			\end{pNiceMatrix}.
+			$	
+		\end{enumerate}
+	\newpage
+	\section{Задача №6}
+		\subsection*{Условие}
+			Произвести сингулярное разложение матрицы $\vec A$:
+			\begin{equation*}
+				\vec A = 
+				\begin{pNiceMatrix}
+					1 & -1 & -2 \\
+					-7/3 & 1/3 & 2/3\\
+					1/3 & -7/3 & -2/3\\
+					-5/3 & 5/3 & -2/3\\
+				\end{pNiceMatrix}.		
+			\end{equation*}
+		\subsection*{Решение}
+		Цель получить разложение $\vec A$ такое, что $\vec A = \vec U \vec \Sigma \vec V^T$
+		Найдем матрицу $\vec A \vec A^T$:
+		\begin{equation*}
+			\vec A \vec A^T = 
+			\begin{pNiceMatrix}
+				6 & -4 & 4 & 2 \\
+				-4 & 6 & -2 & 4 \\
+				4 & -2 & 6 & -4 \\
+				-2 & 4 & -4 & 6 \\
+			\end{pNiceMatrix}.
+		\end{equation*}
+		Найдем корни $\lambda$ уравнения $\left| \vec A \vec A^T - \lambda \vec E \right| = 0$, они будут следующие: 
+		\vspace*{-2.5mm}
+		$$\lambda_1 = 16, \ \lambda_{2,3} = 4, \ \lambda_4 = 0.$$
+		Собственные векторы, соответствующие им: 
+		$$
+			\vec v_1 = 
+			\begin{pNiceMatrix}
+				-1\\
+				1\\
+				-1\\
+				1
+			\end{pNiceMatrix}, 
+			\quad
+			\vec v_2 = 
+			\begin{pNiceMatrix}
+				0\\
+				1\\
+				1\\
+				0
+			\end{pNiceMatrix}, 
+			\quad	
+			\vec v_3 = 
+			\begin{pNiceMatrix}
+				1\\
+				0\\
+				0\\
+				1
+			\end{pNiceMatrix}, 
+			\quad	
+			\vec v_4 = 
+			\begin{pNiceMatrix}
+				-1\\
+				-1\\
+				1\\
+				1
+			\end{pNiceMatrix}.
+		$$
+		Следовательно, сингулярные значения (корни не нулевых собственных значений матрицы $\vec A \vec A^T$) будут иметь вид
+		\begin{equation*}
+			\label{singular_vals}
+			\sigma_1 = 4, \ \sigma_{2,3} = 2.
+		\end{equation*}
+		Пусть столбцы матрицы $\vec U$ --- нормированные собственные векторы $\vec A \vec A^T$:
+		$$
+			\vec U = 
+			\begin{pNiceMatrix}
+				-1/2 & 0 & 1/\sqrt{2} & -1/2\\
+				1/2 & 1/\sqrt{2} & 0 & -1/2\\
+				-1/2 & 1/\sqrt{2} & 0 & 1/2\\
+				1/2 & 0 & 1/\sqrt{2} & 1/2
+			\end{pNiceMatrix},
+		$$
+		и тогда (для сохранения верного размера итоговой матрицы)
+		$$
+		\vec \Sigma = 
+		\begin{pNiceMatrix}
+			4 & 0 & 0 \\
+			0 & 2 & 0 \\
+			0 & 0 & 2 \\
+			0 & 0 & 0 \\
+		\end{pNiceMatrix}.
+		$$
+		Так как матрица $\vec U$ ортогональная, то верно следующее:
+		$$
+			\vec V = (\vec \Sigma^{-1} \vec U^T \vec A)^T, 
+			\quad
+			\vec \Sigma^{-1} = 
+			\begin{pNiceMatrix}
+				1/4 & 0 & 0 & 0\\
+				0 & 1/2 & 0 & 0 \\
+				0 & 0 & 1/2 & 0 \\
+			\end{pNiceMatrix}.
+		$$
+		После вычислений получим, что 
+		$$
+			\vec V = 
+			\begin{pNiceMatrix}
+				-2/3 & -1/\sqrt{2} & -\dfrac{\sqrt{2}}{6}\\
+				2/3 & -1/\sqrt{2} & \dfrac{\sqrt{2}}{6} \\
+				1/3 & 0 & -\dfrac{2 \sqrt{2}}{3}
+			\end{pNiceMatrix}.
+		$$
+		
+		Ответ:
+		\begin{gather*}
+			\vec A = \vec U \vec \Sigma \vec V^T, \quad \text{где}\\
+			\vec U = 
+			\begin{pNiceMatrix}
+				-1/2 & 0 & 1/\sqrt{2} & -1/2\\
+				1/2 & 1/\sqrt{2} & 0 & -1/2\\
+				-1/2 & 1/\sqrt{2} & 0 & 1/2\\
+				1/2 & 0 & 1/\sqrt{2} & 1/2
+			\end{pNiceMatrix}, 
+			\quad
+			\vec \Sigma = 
+			\begin{pNiceMatrix}
+				4 & 0 & 0 \\
+				0 & 2 & 0 \\
+				0 & 0 & 2 \\
+				0 & 0 & 0 \\
+			\end{pNiceMatrix},	
+			\quad
+			\vec V = 
+			\begin{pNiceMatrix}
+				-2/3 & -1/\sqrt{2} & -\dfrac{\sqrt{2}}{6}\\
+				2/3 & -1/\sqrt{2} & \dfrac{\sqrt{2}}{6} \\
+				1/3 & 0 & -\dfrac{2 \sqrt{2}}{3}
+			\end{pNiceMatrix}.	
+		\end{gather*}
+		
+	
+
+	
+\end{document}
